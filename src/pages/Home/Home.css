@@ -1,0 +1,11 @@
+.container {
+  background-color: darkblue;
+  width: 80%;
+  height: 80%;
+}
+
+.title {
+  padding-top: 24px;
+  padding-left: 24px;
+  font-size: xx-large;
+}
