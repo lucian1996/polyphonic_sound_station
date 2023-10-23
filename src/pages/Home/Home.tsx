@@ -1,20 +1,19 @@
 import "./Home.css"
-import { handleFileSelect } from "./handleFileSelect"
+import {handleFileSelect} from "./handleFileSelect"
 
 export default function Home() {
-
   return (
     <div className='container'>
       <h1 className='title'>Polyphonic Sound Station</h1>
       <div className='body'>
         <div className='input'>
           <div className='input-select'>
-            <button onClick={() => handleFileSelect(1)}>
+            <button onClick={() => handleFileSelect()}>
               Select MP3 File 1
             </button>
-            <button onClick={() => handleFileSelect(2)}>
+            {/* <button onClick={() => handleFileSelect(2)}>
               Select MP3 File 2
-            </button>
+            </button> */}
           </div>
           <div className='input-data'>
             <div className='input-track'>

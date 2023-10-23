@@ -18,11 +18,11 @@
         "open": true
       },
       "dialog": {
-        "ask": true, 
-        "confirm": true, 
-        "message": true, 
-        "open": true, 
-        "save": true 
+        "ask": true,
+        "confirm": true,
+        "message": true,
+        "open": true,
+        "save": true
       }
     },
     "bundle": {
