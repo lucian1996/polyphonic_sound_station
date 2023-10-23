@@ -1,11 +1,49 @@
 .container {
-  background-color: darkblue;
+  background-color: rgb(124, 59, 26);
   width: 80%;
   height: 80%;
+  display: flex;
+  flex-direction: column;
 }
 
 .title {
   padding-top: 24px;
   padding-left: 24px;
   font-size: xx-large;
+}
+
+.body {
+  height: 100%;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  height: 80%;
+  display: flex;
+}
+
+.input-select {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1em;
+  padding: 24px;
+}
+
+.input-data {
+  padding: 24px;
+}
+
+.input-track {
+  height: 50%;
+}
+
+.control {
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4em;
 }
