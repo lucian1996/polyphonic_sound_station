@@ -5,7 +5,7 @@ export const handleFileSelect = async () => {
   try {
     const result = await open()
     if (result && result.length > 0) {
-      const yup = await invoke("parse_file", {path: result})
+      const yup = await invoke("parse_metadata", {path: result})
       console.log(yup)
     }
   } catch (error) {
