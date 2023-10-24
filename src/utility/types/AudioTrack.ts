@@ -1,6 +1,5 @@
 interface AudioTrack {
-  title: string;
-  artist: string;
-  length: number; 
-  audioSource: string; 
+  title: string
+  artist: string
+  path: string
 }

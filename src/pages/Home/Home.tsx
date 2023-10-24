@@ -1,28 +1,28 @@
+import {useState} from "react"
 import "./Home.css"
 import {handleFileSelect} from "./handleFileSelect"
 
 export default function Home() {
+  const [metadata, setMetadata] = useState<AudioTrack | undefined>(undefined)
+
+  const handleClick = async () => {
+    const trackData = await handleFileSelect()
+    console.log(trackData)
+    setMetadata(trackData)
+  }
+
   return (
     <div className='container'>
       <h1 className='title'>Polyphonic Sound Station</h1>
       <div className='body'>
         <div className='input'>
           <div className='input-select'>
-            <button onClick={() => handleFileSelect()}>
-              Select MP3 File 1
-            </button>
-            {/* <button onClick={() => handleFileSelect(2)}>
-              Select MP3 File 2
-            </button> */}
+            <button onClick={() => handleClick()}>Select MP3 File 1</button>
           </div>
           <div className='input-data'>
             <div className='input-track'>
-              {/* <div>{track1 ? track1.name : ""}</div> */}
-              {/* <div>{track1 ? "Track 1" : "No track loaded"}</div> */}
-            </div>
-            <div className='input-track'>
-              {/* <div>{track2 ? track2.name : ""}</div> */}
-              {/* <div>{track2 ? "Track 2" : "No track loaded"}</div> */}
+              <div>{metadata ? metadata.title : "No track loaded"}</div>
+              <div>{metadata ? metadata.artist : ""}</div>
             </div>
           </div>
         </div>

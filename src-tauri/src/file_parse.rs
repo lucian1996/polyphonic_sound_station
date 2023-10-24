@@ -1,20 +1,15 @@
 use audiotags::Tag;
 use lazy_static::lazy_static;
+use serde::Serialize;
 use std::sync::Mutex;
 
 #[tauri::command]
-pub fn select_track(path: &str) {
+pub fn select_track(path: &str) -> Option<Metadata> {
     let file_path = path.to_string();
     fetch_metadata(file_path);
 
     let metadata = TRACK1.lock().unwrap();
-    if let Some(metadata) = metadata.as_ref() {
-        println!("Title: {:?}", metadata.title);
-        println!("Artist: {:?}", metadata.artist);
-        println!("Path: {:?}", metadata.file_path);
-    } else {
-        println!("No metadata available.");
-    }
+    metadata.clone()
 }
 
 fn fetch_metadata(file_path: String) {
@@ -30,7 +25,8 @@ fn fetch_metadata(file_path: String) {
     });
 }
 
-struct Metadata {
+#[derive(Serialize, Clone)] // Implement Serialize for Metadata
+pub struct Metadata {
     title: Option<String>,
     artist: Option<String>,
     file_path: String,
