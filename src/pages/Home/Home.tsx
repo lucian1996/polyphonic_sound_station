@@ -3,12 +3,16 @@ import "./Home.css"
 import {handleFileSelect} from "./handleFileSelect"
 
 export default function Home() {
-  const [metadata, setMetadata] = useState<AudioTrack | undefined>(undefined)
+  const [track1, setTrack1] = useState<AudioTrack | undefined>(undefined)
+  const [playback, setPlayback] = useState(false)
 
-  const handleClick = async () => {
+  const handlePlayback = async () => {
+    setPlayback(!playback)
+  }
+
+  const handleInput = async () => {
     const trackData = await handleFileSelect()
-    console.log(trackData)
-    setMetadata(trackData)
+    setTrack1(trackData)
   }
 
   return (
@@ -17,19 +21,33 @@ export default function Home() {
       <div className='body'>
         <div className='input'>
           <div className='input-select'>
-            <button onClick={() => handleClick()}>Select MP3 File 1</button>
+            <button onClick={() => handleInput()}>Select MP3 File 1</button>
           </div>
           <div className='input-data'>
             <div className='input-track'>
-              <div>{metadata ? metadata.title : "No track loaded"}</div>
-              <div>{metadata ? metadata.artist : ""}</div>
+              <div>{track1 ? track1.title : "No track loaded"}</div>
+              <div>{track1 ? track1.artist : ""}</div>
             </div>
           </div>
         </div>
         <div className='control'>
-          <button className='back'>rewind</button>
-          <button className='action'>play</button>
-          <button className='next'>fast forward</button>
+          <button className='previous'>back</button>
+          {playback ? (
+            <button
+              onClick={handlePlayback}
+              className='playback bg-purple-900 opacity-70'
+            >
+              stop
+            </button>
+          ) : (
+            <button
+              onClick={handlePlayback}
+              className='playback bg-teal-900 opacity-70'
+            >
+              play
+            </button>
+          )}
+          <button className='next'>next</button>
         </div>
       </div>
     </div>
