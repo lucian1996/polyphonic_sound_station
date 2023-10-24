@@ -2,23 +2,27 @@ use audiotags::Tag;
 use lazy_static::lazy_static;
 use std::sync::Mutex;
 
-struct Metadata {
-    title: Option<String>,
-    artist: Option<String>,
-    file_path: String,
+#[tauri::command]
+pub fn select_track(path: &str) {
+    let file_path = path.to_string();
+    fetch_metadata(file_path);
+
+    let metadata = TRACK1.lock().unwrap();
+    if let Some(metadata) = metadata.as_ref() {
+        println!("Title: {:?}", metadata.title);
+        println!("Artist: {:?}", metadata.artist);
+        println!("Path: {:?}", metadata.file_path);
+    } else {
+        println!("No metadata available.");
+    }
 }
 
-lazy_static! {
-    static ref METADATA: Mutex<Option<Metadata>> = Mutex::new(None);
-}
-
-fn read_audio_metadata(file_path: String) {
+fn fetch_metadata(file_path: String) {
     let tag = Tag::new().read_from_path(&file_path).ok();
     let title = tag.as_ref().and_then(|t| t.title()).map(String::from);
     let artist = tag.as_ref().and_then(|t| t.artist()).map(String::from);
 
-    // Update the global METADATA
-    let mut metadata = METADATA.lock().unwrap();
+    let mut metadata = TRACK1.lock().unwrap();
     *metadata = Some(Metadata {
         title,
         artist,
@@ -26,14 +30,12 @@ fn read_audio_metadata(file_path: String) {
     });
 }
 
-#[tauri::command]
-pub fn parse_metadata(path: &str) {
-    let file_path = path.to_string(); // Convert &str to String
-    read_audio_metadata(file_path.clone()); // Clone the path to avoid moving it
+struct Metadata {
+    title: Option<String>,
+    artist: Option<String>,
+    file_path: String,
+}
 
-    // Read the global METADATA
-    let metadata = METADATA.lock().unwrap();
-    println!("Title: {:?}", metadata.as_ref().unwrap().title);
-    println!("Artist: {:?}", metadata.as_ref().unwrap().artist);
-    println!("Path: {:?}", metadata.as_ref().unwrap().file_path);
+lazy_static! {
+    static ref TRACK1: Mutex<Option<Metadata>> = Mutex::new(None);
 }
