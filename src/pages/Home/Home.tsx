@@ -1,12 +1,14 @@
 import {useState} from "react"
 import "./Home.css"
 import {handleFileSelect} from "./handleFileSelect"
+import {invoke} from "@tauri-apps/api/tauri"
 
 export default function Home() {
   const [track1, setTrack1] = useState<AudioTrack | undefined>(undefined)
   const [playback, setPlayback] = useState(false)
 
   const handlePlayback = async () => {
+    await invoke("toggle_playback")
     setPlayback(!playback)
   }
 
